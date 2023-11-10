@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@tensorflow-models/pose-detection": "^2.1.3"
+  }
+}
