@@ -7,7 +7,7 @@ mp_pose = mp.solutions.pose
 
 def save_video(frames, output_path, fps, size):
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # or use 'XVID'
-    out = cv2.VideoWriter(output_path, fourcc, fps, size)
+    out = cv2.VideoWriter(output_path, -1, fps, size)
 
     for frame in frames:
         out.write(frame)
@@ -17,7 +17,10 @@ def save_video(frames, output_path, fps, size):
 def process_video(cap, cap2, output_path):
     frames = []
     fps = cap.get(cv2.CAP_PROP_FPS)
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # or use 'XVID'
+    
     size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) * 2), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))  # Adjust the width
+    out = cv2.VideoWriter(output_path, fourcc, fps, size)   
     with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
         while cap.isOpened() and cap2.isOpened():
             ret, frame = cap.read()
@@ -50,16 +53,19 @@ def process_video(cap, cap2, output_path):
 
             frames.append(combined_image)
 
-            cv2.imshow('Mediapipe Feed', combined_image)
+            out.write(combined_image)
 
-            if cv2.waitKey(10) & 0xFF == ord('q'):
-                break
+            #cv2.imshow('Mediapipe Feed', combined_image)
 
+            #if cv2.waitKey(10) & 0xFF == ord('q'):
+                #break
+        #save_video(frames, output_path, fps, size)
         cap.release()
         cap2.release()
         cv2.destroyAllWindows()
+    out.release()
 
-    save_video(frames, output_path, fps, size)
+   
 
    
 
