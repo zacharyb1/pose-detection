@@ -5,19 +5,7 @@ import numpy as np
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
-def save_video(frames, output_path, fps, size):
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # or use 'XVID'
-    out = cv2.VideoWriter(output_path, fourcc, fps, size)
-
-    for frame in frames:
-        out.write(frame)
-
-    out.release()
-
-def process_video(cap, cap2, output_path):
-    frames = []
-    fps = cap.get(cv2.CAP_PROP_FPS)
-    size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) * 2), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))  # Adjust the width
+def process_video(cap, cap2):
     with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
         while cap.isOpened() and cap2.isOpened():
             ret, frame = cap.read()
@@ -48,8 +36,6 @@ def process_video(cap, cap2, output_path):
             # Concatenate images horizontally
             combined_image = np.concatenate((blank_image, blank_image2), axis=1)
 
-            frames.append(combined_image)
-
             cv2.imshow('Mediapipe Feed', combined_image)
 
             if cv2.waitKey(10) & 0xFF == ord('q'):
@@ -59,15 +45,10 @@ def process_video(cap, cap2, output_path):
         cap2.release()
         cv2.destroyAllWindows()
 
-    save_video(frames, output_path, fps, size)
-
-   
-
 def main():
     cap = cv2.VideoCapture('C:\\Users\\zach\\Documents\\Projects\\pose-detection\\media\\jurg.is.mp4')
     cap2 = cv2.VideoCapture('C:\\Users\\zach\\Documents\\Projects\\pose-detection\\media\\nephew.mp4')
-    output_path = 'C:\\Users\\zach\\Documents\\Projects\\pose-detection\\media\\new.mp4'
-    process_video(cap, cap2, output_path)
+    process_video(cap, cap2)
 
 if __name__ == "__main__":
     main()
