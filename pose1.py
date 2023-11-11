@@ -5,19 +5,11 @@ import numpy as np
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
-def save_video(frames, output_path, fps, size):
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # or use 'XVID'
-    out = cv2.VideoWriter(output_path, -1, fps, size)
-
-    for frame in frames:
-        out.write(frame)
-
-    out.release()
 
 def process_video(cap, cap2, output_path):
     frames = []
     fps = cap.get(cv2.CAP_PROP_FPS)
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # or use 'XVID'
+    fourcc = cv2.VideoWriter_fourcc(*'h264')  # or use 'XVID'
     
     size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) * 2), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))  # Adjust the width
     out = cv2.VideoWriter(output_path, fourcc, fps, size)   
