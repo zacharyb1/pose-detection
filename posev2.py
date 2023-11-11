@@ -21,6 +21,7 @@ def process_video(cap, cap2, output_path):
     
     size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) * 2), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))  # Adjust the width
     out = cv2.VideoWriter(output_path, fourcc, fps, size)   
+
     with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
         while cap.isOpened() and cap2.isOpened():
             ret, frame = cap.read()
@@ -65,9 +66,6 @@ def process_video(cap, cap2, output_path):
         cv2.destroyAllWindows()
     out.release()
 
-   
-
-   
 
 def main():
     cap = cv2.VideoCapture('C:\\Users\\zach\\Documents\\Projects\\pose-detection\\media\\jurg.is.mp4')
