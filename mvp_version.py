@@ -47,12 +47,12 @@ def process_video(cap, cap2, output_path):
 
             # Draw the pose landmarks on blank_image2
             if results2.pose_landmarks:
-                mp_drawing.draw_landmarks(blank_image2, results2.pose_landmarks, mp_pose.POSE_CONNECTIONS,
+                mp_drawing.draw_landmarks(frame, results2.pose_landmarks, mp_pose.POSE_CONNECTIONS,
                                           mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=2), 
                                           mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2))
 
             # Overlay blank_image2 on frame
-            frame = cv2.addWeighted(frame, 0.5, blank_image2, 0.5, 0)
+            #frame = cv2.addWeighted(frame, 0.5, blank_image2, 0.5, 0)
 
             # Calculate the total and average distance between corresponding landmarks
             total_distance, average_distance = calculate_distance(results.pose_landmarks, results2.pose_landmarks)
